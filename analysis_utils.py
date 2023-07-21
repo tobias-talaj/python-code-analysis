@@ -150,7 +150,7 @@ def create_std_lib_treemap(component_usage, title):
     fig.update_layout(
         width=1200,
         height=1200,
-        uniformtext=dict(minsize=15, mode='show'),
+        uniformtext=dict(minsize=18, mode='show'),
         title={
             'text': title,
             'font': {'size': 30},
@@ -212,7 +212,7 @@ def plot_usage_in_files(df, library_name=None, top_n=20, number_format='p', comp
     elif number_format == 'M':
         ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, pos: f'{x:.1f}M'))
     
-    plt.ylabel('Number of files' if number_format not in ('%', 'p') else 'Percentage of files')
+    plt.ylabel('Number of Files' if number_format not in ('%', 'p') else 'Percentage of Files')
     plt.xlabel('Library' if library_name is None else 'Component')
     plt.title(f"{'Library' if library_name is None else 'Component'} Usage")
     plt.xticks(rotation=45, ha='right')
@@ -269,9 +269,9 @@ def plot_usage_within_files(df, components_list, top_n=None, number_format='plai
     elif number_format == 'M':
         ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, pos: f'{x:.1f}M'))
     
-    plt.ylabel('Number of occurences')
+    plt.ylabel('Number of Occurences')
     plt.xlabel('Library')
-    plt.title('Component Usage Within Files')
+    plt.title('Components Usage by Library')
     plt.xticks(rotation=45, ha='right')
     plt.rcParams['font.size'] = 16
     plt.rcParams['axes.labelsize'] = 16
