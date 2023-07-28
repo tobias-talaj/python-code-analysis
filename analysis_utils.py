@@ -119,7 +119,7 @@ def prepare_std_lib_treemap_data(libraries, component_types=None, threshold=0.00
 #     fig.show()
 
 
-def create_std_lib_treemap(component_usage, title):
+def create_std_lib_treemap(component_usage, title, width=1200, height=1200, text_size=18):
     """
     Create a treemap visualization of standard library usage.
     
@@ -148,9 +148,9 @@ def create_std_lib_treemap(component_usage, title):
     fig.update_traces(hovertemplate=hovertemplate, textinfo='label+value+percent parent')
 
     fig.update_layout(
-        width=1200,
-        height=1200,
-        uniformtext=dict(minsize=18, mode='show'),
+        width=width,
+        height=height,
+        uniformtext=dict(minsize=text_size, mode='show'),
         title={
             'text': title,
             'font': {'size': 30},
@@ -212,15 +212,15 @@ def plot_usage_in_files(df, library_name=None, top_n=20, number_format='p', comp
     elif number_format == 'M':
         ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, pos: f'{x:.1f}M'))
     
-    plt.ylabel('Number of Files' if number_format not in ('%', 'p') else 'Percentage of Files')
-    plt.xlabel('Library' if library_name is None else 'Component')
-    plt.title(f"{'Library' if library_name is None else 'Component'} Usage")
-    plt.xticks(rotation=45, ha='right')
     plt.rcParams['font.size'] = 16
     plt.rcParams['axes.labelsize'] = 16
     plt.rcParams['axes.titlesize'] = 20
     plt.rcParams['xtick.labelsize'] = 16
     plt.rcParams['ytick.labelsize'] = 12
+    plt.ylabel('Number of Files' if number_format not in ('%', 'p') else 'Percentage of Files')
+    plt.xlabel('Library' if library_name is None else 'Component')
+    plt.title(f"{'Library' if library_name is None else 'Component'} Usage")
+    plt.xticks(rotation=45, ha='right')
     plt.show()
 
 
@@ -314,7 +314,7 @@ def calculate_mean_complexity(df, metadata, min_count):
     return mean_complexities_df
 
 
-def plot_mean_complexity(df, metadata, min_count, title, kind='Function'):
+def plot_mean_complexity(df, metadata, min_count, title, kind='Library', figsize=(20, 10)):
     """
     Plot the mean complexity of code files by function, given a minimum count of occurrences.
 
@@ -326,7 +326,7 @@ def plot_mean_complexity(df, metadata, min_count, title, kind='Function'):
     """
     mean_complexities_df = calculate_mean_complexity(df, metadata, min_count)
 
-    plt.figure(figsize=(20, 10))
+    plt.figure(figsize=figsize)
     sns.barplot(x='function', y='mean_complexity', data=mean_complexities_df)
     plt.xticks(rotation=90, fontsize=16)
     plt.yticks(fontsize=16)
